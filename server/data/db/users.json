@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "$2b$10$q3roz2LWnra/wR8naW2G0uNBldhKK0bXnak.u0pfdWoOKFtzKDR1G",
+    "isAdmin": true,
+    "isCustomer": false,
+    "_id": "yupunb1zr",
+    "createdAt": "2026-01-07T23:03:20.499Z",
+    "updatedAt": "2026-01-07T23:03:20.500Z"
+  },
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "$2b$10$ukos.XfQYgO40t.A6uirqOMEfVwygoIPLwT9nqyoVDepggEZvtCoG",
+    "isAdmin": false,
+    "isCustomer": true,
+    "_id": "6ennuizs3",
+    "createdAt": "2026-01-07T23:03:20.578Z",
+    "updatedAt": "2026-01-07T23:03:20.578Z"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "password": "$2b$10$xpBP3XZ0uztMEgGs72H8be0fO6F0FiIp.39qMqUBhKnXRIiSox2qq",
+    "isAdmin": false,
+    "isCustomer": true,
+    "_id": "dlz9k9icx",
+    "createdAt": "2026-01-07T23:03:20.665Z",
+    "updatedAt": "2026-01-07T23:03:20.665Z"
+  }
+]

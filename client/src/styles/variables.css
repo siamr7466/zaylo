@@ -1,0 +1,51 @@
+:root {
+  /* Palette - Inflexco Brand */
+  /* The Main "Green" Background from the Design */
+  --color-brand-primary: #2C524F;
+  /* Deep Teal/Green */
+  --color-brand-dark: #1F3A38;
+  /* Darker shade for contrast */
+
+  --color-primary: #FFFFFF;
+  /* Body Background (keep clean for shop) */
+  --color-secondary: #F4F5F7;
+  /* Light Grey for sections */
+
+  --color-text: #121212;
+  --color-text-inverse: #FFFFFF;
+  /* Text on Green */
+  --color-text-muted: #9CA3AF;
+
+  /* Accent from the hoodie (Mustard/Gold) */
+  --color-accent: #EAB308;
+  --color-accent-hover: #CA8A04;
+
+  --font-heading: var(--font-outfit);
+  --font-body: var(--font-outfit);
+
+  /* Glass/Matt White Styles */
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(12px);
+  --matt-white: rgba(255, 255, 255, 0.9);
+
+  /* Spacing & Borders */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+
+  --radius-sm: 8px;
+  --radius-md: 24px;
+  /* Soft, large curves like the card */
+  --radius-pill: 999px;
+
+  --shadow-card: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Breakpoints Reference:
+   Mobile: < 768px
+   Tablet: 768px - 1024px
+   Desktop: > 1024px
+*/

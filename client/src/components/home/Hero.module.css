@@ -1,0 +1,170 @@
+.heroSection {
+    position: relative;
+    height: 100vh;
+    min-height: 800px;
+    background: #1e3a38;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.studioLight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3a38 0%, #2d5a56 50%, #1e3a38 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.modelContainer {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.modelView {
+    width: 1000px;
+    height: 1000px;
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #1e3a38;
+    background-blend-mode: multiply;
+    filter: brightness(1.4) contrast(1.2);
+    -webkit-mask-image: radial-gradient(circle at center bottom, black 50%, transparent 90%);
+    mask-image: radial-gradient(circle at center bottom, black 50%, transparent 90%);
+    transform: translateY(120px);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.container {
+    height: 100%;
+    position: relative;
+    max-width: 1600px;
+    display: flex;
+    align-items: center;
+    /* Center content vertically in the container */
+}
+
+.heroContent {
+    pointer-events: auto;
+    max-width: 800px;
+    padding-left: 5%;
+}
+
+.exclusiveBrand {
+    color: white;
+    font-size: 5rem;
+    font-weight: 700;
+    margin: 0 0 25px 0;
+    line-height: 1;
+    letter-spacing: -2px;
+    font-family: var(--font-heading);
+    opacity: 0.95;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.pillBtn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: white;
+    color: #1e3a38;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: auto;
+}
+
+.pillBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1400px) {
+    .exclusiveBrand {
+        font-size: 6rem;
+    }
+
+    .modelView {
+        width: 800px;
+        height: 800px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .heroContent {
+        text-align: center;
+        padding-left: 0;
+        width: 100%;
+        margin-top: 20vh;
+    }
+
+    .exclusiveBrand {
+        font-size: 4.5rem;
+        letter-spacing: -3px;
+        margin-bottom: 30px;
+    }
+
+    .modelView {
+        width: 600px;
+        height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroSection {
+        min-height: 600px;
+    }
+
+    .exclusiveBrand {
+        font-size: 3rem;
+        letter-spacing: -2px;
+    }
+
+    .modelView {
+        width: 400px;
+        height: 400px;
+        transform: translateY(80px);
+    }
+
+    .pillBtn {
+        padding: 14px 36px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .exclusiveBrand {
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+    }
+
+    .modelView {
+        width: 300px;
+        height: 300px;
+    }
+
+    .heroContent {
+        margin-top: 15vh;
+    }
+}

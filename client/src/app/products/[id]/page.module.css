@@ -1,0 +1,121 @@
+.container {
+    padding: 6rem 1.5rem;
+    min-height: 80vh;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.imageCol {
+    background-color: var(--color-secondary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    height: 600px;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.infoCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+}
+
+.price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+}
+
+.rating {
+    margin-bottom: 1.5rem;
+    color: var(--color-highlight);
+    /* Yellow accent */
+}
+
+.reviews {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.description {
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.qtyWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.qtyWrapper label {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.select {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-tertiary);
+    background: transparent;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.loading {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .imageCol {
+        height: 400px;
+    }
+
+    .name {
+        font-size: 2.2rem;
+    }
+}

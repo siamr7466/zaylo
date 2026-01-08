@@ -1,0 +1,137 @@
+.container {
+    padding-bottom: 2rem;
+    color: white;
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.titleInfo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.titleInfo p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+}
+
+.tableControls {
+    margin-bottom: 2rem;
+}
+
+.searchBox {
+    position: relative;
+    max-width: 450px;
+}
+
+.searchBox svg {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.searchBox input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 3.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+    font-size: 1rem;
+    color: white;
+    transition: all 0.3s;
+}
+
+.searchBox input:focus {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tableCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #2d5a56, #1e3a38);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.roleBadge {
+    padding: 0.4rem 1rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.admin {
+    background: rgba(255, 146, 0, 0.1);
+    color: #ff922b;
+    border: 1px solid rgba(255, 146, 0, 0.2);
+}
+
+.customer {
+    background: rgba(33, 150, 243, 0.1);
+    color: #64b5f6;
+    border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.notice {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: rgba(230, 162, 60, 0.05);
+    border: 1px solid rgba(230, 162, 60, 0.15);
+    border-radius: 12px;
+    color: #e6a23c;
+    font-size: 0.9rem;
+    text-align: center;
+}

@@ -1,0 +1,284 @@
+.sidebar {
+    width: 280px;
+    /* Slightly wider to accommodate user info */
+    height: 100vh;
+    /* Full height now, independent of top navbar */
+    background: #0d1615;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 10005;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: white;
+    font-family: var(--font-heading);
+    margin: 0;
+}
+
+.logo span {
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: #4CAF50;
+    text-transform: uppercase;
+    margin-left: 0.4rem;
+    letter-spacing: 2px;
+}
+
+.toggleBtn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+}
+
+.toggleBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    gap: 0.5rem;
+    overflow-y: auto;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    border-radius: 8px;
+}
+
+.link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.active {
+    color: white;
+    background: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.active .icon {
+    color: #4CAF50;
+}
+
+.icon {
+    font-size: 1.3rem;
+    min-width: 24px;
+    /* Ensure icon doesn't shrink */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.userName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.userRole {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    justify-content: center;
+    /* Centered in collapsed mode via logic below */
+}
+
+.backLink:hover {
+    color: white;
+}
+
+/* Desktop Collapsed State */
+@media (min-width: 1025px) {
+    .sidebar.collapsed {
+        width: 80px;
+    }
+
+    .sidebar.collapsed .logoText,
+    .sidebar.collapsed .userDetails,
+    .sidebar.collapsed .backText,
+    .sidebar.collapsed .link span:not(.icon) {
+        display: none;
+    }
+
+    .sidebar.collapsed .logoRow {
+        justify-content: center;
+    }
+
+    .sidebar.collapsed .logo {
+        display: none;
+        /* Hide standard logo text in collapsed */
+    }
+
+    .sidebar.collapsed .toggleBtn {
+        width: 100%;
+        /* Fill the header area mostly */
+        height: 40px;
+        border: none;
+        background: transparent;
+    }
+
+    .sidebar.collapsed .link {
+        justify-content: center;
+        padding: 0.8rem;
+    }
+
+    .sidebar.collapsed .userInfo {
+        justify-content: center;
+        padding-bottom: 1rem;
+        gap: 0;
+        border-bottom: none;
+    }
+
+    .sidebar.collapsed .footer {
+        padding: 1rem 0;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .sidebar.collapsed .backLink {
+        font-size: 1.2rem;
+    }
+}
+
+/* Mobile & Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10004;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.showOverlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+        /* Standard drawer width */
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* On mobile, toggle btn inside sidebar closes it, or serves no purpose if there's an X. 
+       We'll hide the toggle inside the sidebar on mobile and use the X or overlay to close.
+       Actually, user asked to "remove upper section type thing". 
+       So on mobile we need the toggle available SOMEWHERE. 
+       Usually this is in the main layout header we just deleted.
+       Wait, if I deleted the AdminLayout header, how does a user OPEN the sidebar on mobile?
+       I need to restore a Minimal Mobile Header in AdminLayout or add a floating toggle.
+    */
+    .toggleBtn {
+        display: none;
+        /* Hide collapse toggle on mobile inside sidebar */
+    }
+}

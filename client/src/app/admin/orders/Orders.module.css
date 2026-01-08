@@ -1,0 +1,435 @@
+.container {
+    padding-bottom: 2rem;
+    color: white;
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.titleInfo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    margin-bottom: 0.5rem;
+}
+
+.titleInfo p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+}
+
+.tableControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.searchBox {
+    position: relative;
+    flex: 1;
+    max-width: 450px;
+}
+
+.searchBox svg {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.searchBox input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 3.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+    font-size: 1rem;
+    color: white;
+    transition: all 0.3s;
+}
+
+.searchBox input:focus {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filters {
+    display: flex;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.4rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filterBtn {
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.activeFilter {
+    background: white;
+    color: #1e3a38;
+}
+
+.tableCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.orderId {
+    font-weight: 700;
+    color: white;
+    font-family: monospace;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.badge {
+    padding: 0.4rem 1rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.success {
+    background: rgba(81, 207, 102, 0.1);
+    color: #8ce99a;
+    border: 1px solid rgba(81, 207, 102, 0.2);
+}
+
+.warning {
+    background: rgba(255, 146, 0, 0.1);
+    color: #ff922b;
+    border: 1px solid rgba(255, 146, 0, 0.2);
+}
+
+.error {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff8787;
+    border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.viewBtn,
+.deliverBtn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.viewBtn {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.deliverBtn {
+    background: rgba(76, 175, 80, 0.1);
+    color: #81c784;
+}
+
+.viewBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.deliverBtn:hover {
+    background: #4caf50;
+    color: white;
+}
+
+/* Modal Styling */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal {
+    background: #152927;
+    width: 100%;
+    max-width: 850px;
+    border-radius: 28px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 40px 160px rgba(0, 0, 0, 0.9);
+}
+
+.modalHeader {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h2 {
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    color: white;
+}
+
+.modalHeader span {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    margin-left: 0.75rem;
+    font-weight: 400;
+}
+
+.closeModal {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+}
+
+.orderBody {
+    padding: 2.5rem;
+    overflow-y: auto;
+}
+
+.orderGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.orderSection h3 {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+}
+
+.orderSection p {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.itemsList {
+    margin-bottom: 3rem;
+}
+
+.itemsList h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.75rem;
+    color: white;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item img {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.itemInfo p {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: white;
+    font-size: 1.05rem;
+}
+
+.itemInfo span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.orderSummary {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.total {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.textSuccess {
+    color: #8ce99a;
+}
+
+.textError {
+    color: #ff8787;
+}
+
+.modalFooter {
+    padding: 1.75rem 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.25rem;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.closeBtn {
+    padding: 0.9rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mainDeliverBtn {
+    padding: 0.9rem 2.25rem;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.mainDeliverBtn:hover {
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+}
+
+.loader {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 1024px) {
+    .orderGrid {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .orderGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .tableControls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .searchBox {
+        max-width: 100%;
+    }
+
+    .filters {
+        overflow-x: auto;
+    }
+
+    .modalHeader {
+        padding: 1.5rem;
+    }
+
+    .orderBody {
+        padding: 1.5rem;
+    }
+}

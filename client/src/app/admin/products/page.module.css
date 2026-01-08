@@ -1,0 +1,160 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--color-text);
+}
+
+.addBtn {
+    background: var(--color-brand-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.addBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filterBar {
+    margin-bottom: 2rem;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    max-width: 400px;
+    color: var(--color-text-muted);
+}
+
+.search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.tableWrapper {
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    background: var(--color-secondary);
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.table td {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--color-tertiary);
+    vertical-align: middle;
+}
+
+.thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-secondary);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.productName {
+    font-weight: 600;
+}
+
+.inStock {
+    background: rgba(46, 90, 84, 0.1);
+    color: #2E5A54;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.outOfStock {
+    background: rgba(233, 69, 96, 0.1);
+    color: var(--color-danger);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.editBtn {
+    color: var(--color-brand-primary);
+}
+
+.deleteBtn {
+    color: var(--color-danger);
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .tableWrapper {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 800px;
+    }
+
+    .search {
+        max-width: 100%;
+    }
+}

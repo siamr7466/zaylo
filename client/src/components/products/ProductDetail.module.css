@@ -1,0 +1,628 @@
+.container {
+    padding: 6rem 0 4rem;
+    background: #fcfcfc;
+    min-height: 100vh;
+}
+
+.loading {
+    text-align: center;
+    padding: 10rem 0;
+    font-size: 1.5rem;
+    color: #1e3a38;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.breadcrumb a {
+    color: #1e3a38;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.breadcrumb a:hover {
+    opacity: 0.7;
+}
+
+/* Product Main Section */
+.productMain {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+/* Gallery */
+.gallery {
+    position: sticky;
+    top: 12rem;
+    height: fit-content;
+}
+
+.mainImage {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.mainImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.thumbnail {
+    aspect-ratio: 1;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.thumbnail:hover {
+    border-color: #1e3a38;
+}
+
+.activeThumbnail {
+    border-color: #1e3a38;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Product Info */
+.productInfo {
+    padding-top: 2rem;
+}
+
+.category {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1e3a38;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+    font-family: var(--font-heading);
+    line-height: 1.2;
+}
+
+.ratingSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.starFilled {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.starEmpty {
+    color: #ddd;
+    font-size: 1.2rem;
+}
+
+.ratingText {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e3a38;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 3rem;
+}
+
+/* Quantity Section */
+.quantitySection {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #eee;
+}
+
+.quantitySection label {
+    font-weight: 600;
+    color: #1e3a38;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+    border: 2px solid #1e3a38;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.quantityControl button {
+    background: transparent;
+    border: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #1e3a38;
+}
+
+.quantityControl button:hover:not(:disabled) {
+    background: #1e3a38;
+    color: white;
+}
+
+.quantityControl button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.quantityControl span {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 600;
+    border-left: 2px solid #1e3a38;
+    border-right: 2px solid #1e3a38;
+    padding: 0 1rem;
+}
+
+.stock {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.addToCartBtn {
+    flex: 1;
+    background: #1e3a38;
+    color: white;
+    border: none;
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.addToCartBtn:hover {
+    background: #2d5a56;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(30, 58, 56, 0.3);
+}
+
+.iconAction {
+    width: 56px;
+    height: 56px;
+    border: 2px solid #1e3a38;
+    background: transparent;
+    color: #1e3a38;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.3rem;
+}
+
+.iconAction:hover {
+    background: #1e3a38;
+    color: white;
+}
+
+/* Features */
+.features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.feature {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.feature svg {
+    font-size: 2rem;
+    color: #1e3a38;
+    flex-shrink: 0;
+}
+
+.feature strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #1e3a38;
+}
+
+.feature p {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Tabs */
+.tabs {
+    margin-top: 8rem;
+}
+
+.tabHeaders {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 3rem;
+}
+
+.tabHeaders button {
+    background: transparent;
+    border: none;
+    padding: 1.5rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tabHeaders button:hover {
+    color: #1e3a38;
+}
+
+.activeTab {
+    color: #1e3a38 !important;
+    border-bottom-color: #1e3a38 !important;
+}
+
+.tabContent {
+    padding: 3rem 0;
+}
+
+/* Description Tab */
+.descriptionTab h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1e3a38;
+}
+
+.descriptionTab p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.descriptionTab h4 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem;
+    color: #1e3a38;
+}
+
+.descriptionTab ul {
+    list-style: none;
+    padding: 0;
+}
+
+.descriptionTab li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    position: relative;
+    font-size: 1.05rem;
+    color: #555;
+}
+
+.descriptionTab li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #1e3a38;
+    font-weight: 700;
+}
+
+/* Reviews Tab */
+.reviewsTab {
+    max-width: 900px;
+}
+
+.reviewSummary {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.overallRating {
+    text-align: center;
+}
+
+.bigRating {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #1e3a38;
+    margin-bottom: 1rem;
+}
+
+.reviewForm {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.reviewForm h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #1e3a38;
+}
+
+.ratingInput {
+    margin-bottom: 1.5rem;
+}
+
+.ratingInput label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: #1e3a38;
+}
+
+.reviewForm textarea,
+.questionForm textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #eee;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s;
+}
+
+.reviewForm textarea:focus,
+.questionForm textarea:focus {
+    outline: none;
+    border-color: #1e3a38;
+}
+
+.submitBtn {
+    background: #1e3a38;
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submitBtn:hover {
+    background: #2d5a56;
+    transform: translateY(-2px);
+}
+
+.reviewsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.review {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+}
+
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviewHeader strong {
+    font-size: 1.1rem;
+    color: #1e3a38;
+}
+
+.review p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.reviewDate {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Questions Tab */
+.questionsTab {
+    max-width: 900px;
+}
+
+.questionForm {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.questionForm h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #1e3a38;
+}
+
+.questionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.question {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+}
+
+.questionText {
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    color: #1e3a38;
+}
+
+.questionText strong {
+    color: #1e3a38;
+    margin-right: 0.5rem;
+}
+
+.questionUser {
+    color: #888;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.answerText {
+    padding: 1.5rem;
+    background: #f8f8f8;
+    border-radius: 4px;
+    color: #555;
+    line-height: 1.7;
+}
+
+.answerText strong {
+    color: #1e3a38;
+    margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .productMain {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .gallery {
+        position: relative;
+        top: 0;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .price {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10rem 0 5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .price {
+        font-size: 1.8rem;
+    }
+
+    .quantitySection {
+        flex-wrap: wrap;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .iconAction {
+        width: 100%;
+    }
+
+    .tabHeaders {
+        overflow-x: auto;
+    }
+
+    .tabHeaders button {
+        padding: 1rem 1.5rem;
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb {
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .thumbnails {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
