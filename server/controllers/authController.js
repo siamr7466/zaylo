@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
-const generateToken = require('../utils/generateToken');
+
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
