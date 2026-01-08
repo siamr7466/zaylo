@@ -1,75 +1,31 @@
 "use client";
-import { useEffect, useRef, useState } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import Lenis from 'lenis';
 
 export default function SmoothScroll({ children }) {
-    const scrollRef = useRef(null);
-    const [isClient, setIsClient] = useState(false);
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const locomotiveInstance = useRef(null);
-
     useEffect(() => {
-        setIsClient(true);
-    }, []);
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
 
-    useEffect(() => {
-        if (!isClient || !scrollRef.current) return;
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
 
-        // Dynamic import for locomotive-scroll to avoid SSR issues
-        const initScroll = async () => {
-            try {
-                const LocomotiveScroll = (await import('locomotive-scroll')).default;
-
-                locomotiveInstance.current = new LocomotiveScroll({
-                    el: scrollRef.current,
-                    smooth: true,
-                    multiplier: 1,
-                    class: 'is-reveal',
-                    smartphone: {
-                        smooth: true
-                    },
-                    tablet: {
-                        smooth: true
-                    }
-                });
-
-                window.locomotiveScroll = locomotiveInstance.current;
-            } catch (error) {
-                console.warn('Locomotive scroll failed to initialize:', error);
-            }
-        };
-
-        initScroll();
+        requestAnimationFrame(raf);
 
         return () => {
-            if (locomotiveInstance.current) {
-                locomotiveInstance.current.destroy();
-                window.locomotiveScroll = null;
-            }
+            lenis.destroy();
         };
-    }, [isClient]);
+    }, []);
 
-    // Scroll to top on route change
-    useEffect(() => {
-        if (locomotiveInstance.current) {
-            locomotiveInstance.current.scrollTo(0, {
-                duration: 0,
-                disableLerp: true
-            });
-            // Also need to update the scroll instance to recalculate page height
-            setTimeout(() => {
-                locomotiveInstance.current.update();
-            }, 100);
-        } else {
-            // Fallback for when locomotive is not yet initialized or failed
-            window.scrollTo(0, 0);
-        }
-    }, [pathname, searchParams]);
-
-    return (
-        <div data-scroll-container ref={scrollRef}>
-            {children}
-        </div>
-    );
+    return <>{children}</>;
 }

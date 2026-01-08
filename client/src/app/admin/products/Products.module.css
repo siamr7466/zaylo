@@ -15,6 +15,7 @@
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-family: var(--font-heading);
+    color: white;
 }
 
 .titleInfo p {
@@ -98,6 +99,12 @@
     background-size: 1.2rem;
 }
 
+.filters select option {
+    background: #152927;
+    color: white;
+    padding: 10px;
+}
+
 .tableCard {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
@@ -119,7 +126,7 @@
     padding: 1.25rem 1.5rem;
     font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.5);
+    color: white;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     text-transform: uppercase;
     letter-spacing: 0.5px;

@@ -15,10 +15,8 @@ export default function AdminUsers() {
         const fetchUsers = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${currentUser.token}` } };
-                // Using the specific profile/list logic if we had it, but let's assume we fetch all
-                // For now, let's mock or use a temporary endpoint if available
-                const { data } = await api.get('/users/profile'); // Just to test api
-                setUsers([data]); // Placeholder for single user until we have full list api
+                const { data } = await api.get('/users', config);
+                setUsers(data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             } finally {
@@ -60,24 +58,29 @@ export default function AdminUsers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user._id}>
-                                <td className={styles.userCell}>
-                                    <div className={styles.avatar}>
-                                        {user.name.charAt(0).toUpperCase()}
-                                    </div>
-                                    <span>{user.name}</span>
-                                </td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <span className={`${styles.roleBadge} ${user.isAdmin ? styles.admin : styles.customer}`}>
-                                        {user.isAdmin ? <LuShield size={12} /> : null}
-                                        {user.isAdmin ? 'Admin' : 'Customer'}
-                                    </span>
-                                </td>
-                                <td>Recently</td>
-                            </tr>
-                        ))}
+                        {users
+                            .filter(user =>
+                                user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                user.email.toLowerCase().includes(searchTerm.toLowerCase())
+                            )
+                            .map((user) => (
+                                <tr key={user._id}>
+                                    <td className={styles.userCell}>
+                                        <div className={styles.avatar}>
+                                            {user.name.charAt(0).toUpperCase()}
+                                        </div>
+                                        <span>{user.name}</span>
+                                    </td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        <span className={`${styles.roleBadge} ${user.isAdmin ? styles.admin : styles.customer}`}>
+                                            {user.isAdmin ? <LuShield size={12} /> : null}
+                                            {user.isAdmin ? 'Admin' : 'Customer'}
+                                        </span>
+                                    </td>
+                                    <td>Recently</td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

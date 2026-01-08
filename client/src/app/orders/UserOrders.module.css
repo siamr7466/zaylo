@@ -31,7 +31,12 @@
     justify-content: center;
     min-height: 400px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: white;
+}
+
+.empty h2,
+.empty p {
+    color: white;
 }
 
 .emptyIcon {

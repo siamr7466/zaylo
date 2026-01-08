@@ -1,9 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const colors = require('colors');
 const cors = require('cors');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const connectDB = require('./config/db');
 
 dotenv.config();
+
+connectDB();
 
 const app = express();
 
@@ -18,10 +22,15 @@ app.use(cors({
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/authRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const settingsRoutes = require('./routes/settingsRoutes'); // Added settingsRoutes import
+const newsletterRoutes = require('./routes/newsletterRoutes');
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Health check endpoint
 app.get('/', (req, res) => {

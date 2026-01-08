@@ -20,8 +20,10 @@
 .navbar.scrolled {
     top: 0;
     padding: 0.8rem 0;
-    background: rgba(20, 30, 28, 0.4);
-    /* Slight tint when scrolled */
+    background: rgba(0, 0, 0, 0.3);
+    /* Transparent glassmorphism */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: none;
     width: 100%;

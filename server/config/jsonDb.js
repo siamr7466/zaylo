@@ -89,5 +89,7 @@ class JsonDb {
 const usersDb = new JsonDb('users');
 const productsDb = new JsonDb('products');
 const ordersDb = new JsonDb('orders');
+const settingsDb = new JsonDb('settings');
+const newsletterDb = new JsonDb('newsletter');
 
-module.exports = { usersDb, productsDb, ordersDb };
+module.exports = { usersDb, productsDb, ordersDb, settingsDb, newsletterDb };

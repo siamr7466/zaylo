@@ -16,7 +16,11 @@ export default function LoginPage() {
 
     useEffect(() => {
         if (user) {
-            router.push('/');
+            if (user.isAdmin) {
+                router.push('/admin/dashboard');
+            } else {
+                router.push('/');
+            }
         }
     }, [user, router]);
 
@@ -24,7 +28,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             await login(email, password);
-            router.push('/');
+            // Router push handled by useEffect when user state updates
         } catch (err) {
             setError(err);
         }

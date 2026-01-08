@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
+import PageHero from '../../components/ui/PageHero';
 import styles from './page.module.css';
 import api from '../../lib/api';
 import Link from 'next/link';
@@ -34,15 +36,25 @@ export default function Shop() {
         fetchProducts();
     }, []);
 
+    const searchParams = useSearchParams();
+    const categoryParam = searchParams.get('category');
+    const pageTitle = categoryParam ? `${categoryParam} Collection` : 'Exclusive Collection';
+    const breadcrumbs = [
+        { label: 'Shop', href: '/shop' }
+    ];
+
+    if (categoryParam) {
+        breadcrumbs.push({ label: categoryParam, href: `/shop?category=${categoryParam}` });
+    }
+
     return (
         <main>
             <Navbar />
-            <section className={styles.header}>
-                <div className="container">
-                    <h1 className={styles.title}>Exclusive Collection</h1>
-                    <p className={styles.subtitle}>Curated products for the discerning individual.</p>
-                </div>
-            </section>
+            <PageHero
+                title={pageTitle}
+                subtitle="Curated products for the discerning individual."
+                breadcrumbs={breadcrumbs}
+            />
 
             <section className="container" style={{ padding: '4rem 1rem' }}>
                 {loading ? (

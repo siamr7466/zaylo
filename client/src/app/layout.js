@@ -20,11 +20,13 @@ import Navbar from "../components/layout/Navbar";
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={outfit.variable} suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning={true}>
         <AuthProvider>
           <CartProvider>
             <Navbar />
-            {children}
+            <SmoothScroll>
+              {children}
+            </SmoothScroll>
           </CartProvider>
         </AuthProvider>
       </body>

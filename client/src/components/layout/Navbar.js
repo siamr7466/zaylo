@@ -62,14 +62,17 @@ const Navbar = () => {
 
     // ... existing helpers ...
 
+    // Hide Navbar on Admin Pages
+    if (usePathname().startsWith('/admin')) return null;
+
     return (
         <motion.nav
             className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}
             animate={{
                 y: 0,
                 opacity: 1,
-                backgroundColor: isScrolled ? 'rgba(30, 58, 56, 0.95)' : 'rgba(20, 30, 28, 0.6)',
-                backdropFilter: isScrolled ? 'blur(20px)' : 'blur(12px)',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                backdropFilter: 'blur(16px)',
             }}
             transition={{ duration: 0.5, ease: "circOut" }}
         >

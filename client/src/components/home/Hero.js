@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { LuArrowRight } from 'react-icons/lu';
 import styles from './Hero.module.css';
 
 const Hero = () => {
@@ -72,6 +73,9 @@ const Hero = () => {
                         >
                             <Link href="/shop" className={styles.pillBtn}>
                                 Shop Now
+                                <div className={styles.btnIcon}>
+                                    <LuArrowRight size={20} />
+                                </div>
                             </Link>
                         </motion.div>
                     </motion.div>

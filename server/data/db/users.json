@@ -28,5 +28,16 @@
     "_id": "dlz9k9icx",
     "createdAt": "2026-01-07T23:03:20.665Z",
     "updatedAt": "2026-01-07T23:03:20.665Z"
+  },
+  {
+    "name": "Siam",
+    "email": "siamrofficial76@gmail.com",
+    "password": "$2b$10$VxP6XgSjBmSEQvlmVm3fXe4SFey2RjBLdg/KDIRRjpU1UYxRvMvAe",
+    "isAdmin": true,
+    "isCustomer": true,
+    "isVerified": true,
+    "_id": "xutr5e4dm",
+    "createdAt": "2026-01-08T05:39:08.050Z",
+    "updatedAt": "2026-01-08T06:24:16.362Z"
   }
 ]

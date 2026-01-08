@@ -43,6 +43,19 @@ export default function AdminOrders() {
         }
     };
 
+    const handlePaid = async (id) => {
+        try {
+            const config = { headers: { Authorization: `Bearer ${user.token}` } };
+            await api.put(`/orders/${id}/pay`, {}, config);
+            fetchOrders();
+            if (selectedOrder && selectedOrder._id === id) {
+                setSelectedOrder({ ...selectedOrder, isPaid: true });
+            }
+        } catch (error) {
+            alert('Error updating order');
+        }
+    };
+
     const filteredOrders = orders.filter(order => {
         const matchesSearch = order._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
             order.user?.name?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -220,6 +233,15 @@ export default function AdminOrders() {
                             </div>
 
                             <div className={styles.modalFooter}>
+                                {!selectedOrder.isPaid && (
+                                    <button
+                                        className={styles.mainDeliverBtn}
+                                        onClick={() => handlePaid(selectedOrder._id)}
+                                        style={{ background: '#4CAF50', marginRight: '10px' }}
+                                    >
+                                        Mark as Paid
+                                    </button>
+                                )}
                                 {!selectedOrder.isDelivered && (
                                     <button
                                         className={styles.mainDeliverBtn}

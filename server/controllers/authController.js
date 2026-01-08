@@ -1,12 +1,12 @@
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
-const { usersDb } = require('../config/jsonDb');
+const generateToken = require('../utils/generateToken');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const sendEmail = require('../utils/sendEmail');
 
-// Helper to check password
-const matchPassword = async (enteredPassword, storedPassword) => {
-    return await bcrypt.compare(enteredPassword, storedPassword);
-};
+
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -14,9 +14,26 @@ const matchPassword = async (enteredPassword, storedPassword) => {
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await usersDb.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (user && (await matchPassword(password, user.password))) {
+    if (user && (await user.matchPassword(password))) {
+        // Master Admin Override (Bypass verification)
+        console.log('Checking Master Admin:', user.email, process.env.ADMIN_EMAIL);
+        if (user.email === process.env.ADMIN_EMAIL) {
+            console.log('Master Admin detected');
+            if (!user.isAdmin || !user.isVerified) {
+                user.isAdmin = true;
+                user.isVerified = true;
+                await user.save();
+            }
+        }
+
+        // ID: 112 - Check verification status (Skip for admin)
+        if (user.isVerified === false && !user.isAdmin) {
+            res.status(401);
+            throw new Error('Please verify your email address. Check your inbox.');
+        }
+
         res.json({
             _id: user._id,
             name: user.name,
@@ -36,31 +53,55 @@ const authUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
-    const userExists = await usersDb.findOne({ email });
+    const userExists = await User.findOne({ email });
 
     if (userExists) {
         res.status(400);
         throw new Error('User already exists');
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // ID: 111 - Generate verification token
+    const verificationToken = crypto.randomBytes(20).toString('hex');
 
-    const user = await usersDb.create({
+    const user = await User.create({
         name,
         email,
-        password: hashedPassword,
-        isAdmin: false,
+        password, // Hook will hash it
+        isAdmin: email === process.env.ADMIN_EMAIL,
         isCustomer: true,
+        isVerified: false, // ID: 111 - Set unverified initially
+        verificationToken
     });
 
     if (user) {
+        // ID: 111 - Send verification email
+        const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email/${verificationToken}`;
+
+        const message = `
+            Welcome to Zaylo!
+            
+            Please click the following link to verify your email address:
+            ${verificationUrl}
+        `;
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: 'Zaylo Email Verification',
+                message,
+                html: `
+                    <h3>Welcome to Zaylo!</h3>
+                    <p>Please click the button below to verify your email address:</p>
+                    <a href="${verificationUrl}" style="background: #000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Email</a>
+                `
+            });
+        } catch (error) {
+            console.error('Verification email failed:', error);
+            // Optionally revert user creation or just log it
+        }
+
         res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: generateToken(user._id),
+            message: 'Registration successful! Please check your email to verify your account.'
         });
     } else {
         res.status(400);
@@ -68,24 +109,60 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Verify user email
+// @route   POST /api/users/verify-email
+// @access  Public
+const verifyEmail = asyncHandler(async (req, res) => {
+    const { token } = req.body;
+
+    const user = await User.findOne({ verificationToken: token });
+
+    if (!user) {
+        res.status(400);
+        throw new Error('Invalid or expired verification token');
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    await user.save();
+
+    res.status(200).json({ success: true, message: 'Email verified successfully' });
+});
+
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        });
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-    const user = await usersDb.findById(req.user._id);
+    const user = await User.findById(req.user._id);
 
     if (user) {
-        const update = {
-            name: req.body.name || user.name,
-            email: req.body.email || user.email,
-        };
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
 
         if (req.body.password) {
-            const salt = await bcrypt.genSalt(10);
-            update.password = await bcrypt.hash(req.body.password, salt);
+            user.password = req.body.password;
         }
 
-        const updatedUser = await usersDb.findByIdAndUpdate(req.user._id, update);
+        const updatedUser = await user.save();
 
         res.json({
             _id: updatedUser._id,
@@ -100,9 +177,19 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private/Admin
+const getUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({});
+    res.json(users);
+});
+
 module.exports = {
     authUser,
     registerUser,
+    verifyEmail,
     getUserProfile,
     updateUserProfile,
+    getUsers,
 };

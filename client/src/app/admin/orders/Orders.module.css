@@ -12,6 +12,7 @@
     font-weight: 700;
     font-family: var(--font-heading);
     margin-bottom: 0.5rem;
+    color: white;
 }
 
 .titleInfo p {
@@ -104,7 +105,7 @@
     padding: 1.25rem 1.5rem;
     font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.5);
+    color: white;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     text-transform: uppercase;
     letter-spacing: 0.5px;

@@ -1,0 +1,21 @@
+[
+  {
+    "siteName": "Zaylo",
+    "siteDescription": "Elevating your lifestyle with premium modern fashion.",
+    "contact": {
+      "address": "123 Fashion Avenue, New York, NY 10012",
+      "email": "support@zaylo.com",
+      "phone": "+1 (555) 123-4567",
+      "hours": "Monday - Friday: 9am - 8pm"
+    },
+    "socials": {
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com",
+      "instagram": "https://instagram.com",
+      "linkedin": "https://linkedin.com"
+    },
+    "_id": "ksyotre4o",
+    "createdAt": "2026-01-08T05:23:57.373Z",
+    "updatedAt": "2026-01-08T05:23:57.373Z"
+  }
+]

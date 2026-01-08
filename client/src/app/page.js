@@ -7,11 +7,15 @@ import ProductSection from '../components/home/ProductSection';
 import TopCustomers from '../components/home/TopCustomers';
 
 const revealVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
+    transition: {
+      duration: 1,
+      ease: [0.25, 0.1, 0.25, 1],
+      delay: 0.2
+    }
   }
 };
 
@@ -20,14 +24,7 @@ export default function Home() {
     <main>
       <Hero />
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.1 }}
-        variants={revealVariants}
-      >
-        <CategoryShowcase />
-      </motion.div>
+      <CategoryShowcase />
 
       {/* Featured Products */}
       <motion.div

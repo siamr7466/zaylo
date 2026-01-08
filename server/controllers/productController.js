@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { productsDb } = require('../config/jsonDb');
+const Product = require('../models/Product');
 
 // @desc    Fetch all products with optional filters
 // @route   GET /api/products
@@ -7,50 +7,53 @@ const { productsDb } = require('../config/jsonDb');
 const getProducts = asyncHandler(async (req, res) => {
     const { category, trending, bestseller, newarrival, limit, search } = req.query;
 
-    let products = await productsDb.find();
+    let query = {};
 
-    // Apply filters
     if (category) {
-        products = products.filter(p => p.category.toLowerCase().includes(category.toLowerCase()));
+        query.category = { $regex: category, $options: 'i' };
     }
 
     if (trending === 'true') {
-        products = products.filter(p => p.isTrending);
+        query.isTrending = true;
     }
 
     if (bestseller === 'true') {
-        products = products.filter(p => p.isBestSeller);
+        query.isBestSeller = true;
     }
 
     if (newarrival === 'true') {
-        products = products.filter(p => p.isNewArrival);
+        query.isNewArrival = true;
     }
 
     if (search) {
-        const s = search.toLowerCase();
-        products = products.filter(p =>
-            p.name.toLowerCase().includes(s) ||
-            p.description.toLowerCase().includes(s) ||
-            p.brand.toLowerCase().includes(s) ||
-            p.category.toLowerCase().includes(s)
-        );
+        query.$or = [
+            { name: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } },
+            { brand: { $regex: search, $options: 'i' } },
+            { category: { $regex: search, $options: 'i' } },
+        ];
     }
 
-    // Apply limit
+    let productsQuery = Product.find(query);
+
     if (limit) {
-        products = products.slice(0, parseInt(limit));
+        productsQuery = productsQuery.limit(parseInt(limit));
     }
 
+    const products = await productsQuery;
     res.json(products);
 });
 
 // @desc    Fetch trending products
 // @route   GET /api/products/trending
 // @access  Public
+// @desc    Fetch trending products
+// @route   GET /api/products/trending
+// @access  Public
 const getTrending = asyncHandler(async (req, res) => {
     const { limit = 8 } = req.query;
-    let products = await productsDb.find({ isTrending: true });
-    res.json(products.slice(0, parseInt(limit)));
+    const products = await Product.find({ isTrending: true }).limit(parseInt(limit));
+    res.json(products);
 });
 
 // @desc    Fetch best sellers
@@ -58,8 +61,8 @@ const getTrending = asyncHandler(async (req, res) => {
 // @access  Public
 const getBestSellersProducts = asyncHandler(async (req, res) => {
     const { limit = 8 } = req.query;
-    let products = await productsDb.find({ isBestSeller: true });
-    res.json(products.slice(0, parseInt(limit)));
+    const products = await Product.find({ isBestSeller: true }).limit(parseInt(limit));
+    res.json(products);
 });
 
 // @desc    Fetch new arrivals
@@ -67,8 +70,8 @@ const getBestSellersProducts = asyncHandler(async (req, res) => {
 // @access  Public
 const getNewArrivalsProducts = asyncHandler(async (req, res) => {
     const { limit = 8 } = req.query;
-    let products = await productsDb.find({ isNewArrival: true });
-    res.json(products.slice(0, parseInt(limit)));
+    const products = await Product.find({ isNewArrival: true }).limit(parseInt(limit));
+    res.json(products);
 });
 
 // @desc    Fetch products by category
@@ -77,15 +80,16 @@ const getNewArrivalsProducts = asyncHandler(async (req, res) => {
 const getProductsByCategory = asyncHandler(async (req, res) => {
     const { category } = req.params;
     const { limit = 20 } = req.query;
-    let products = await productsDb.find({ category: category });
-    res.json(products.slice(0, parseInt(limit)));
+    // Case-insensitive fetch
+    const products = await Product.find({ category: { $regex: new RegExp(`^${category}$`, 'i') } }).limit(parseInt(limit));
+    res.json(products);
 });
 
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  Public
 const getProductById = asyncHandler(async (req, res) => {
-    const product = await productsDb.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
 
     if (product) {
         res.json(product);
@@ -99,7 +103,7 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   GET /api/products/categories
 // @access  Public
 const getCategories = asyncHandler(async (req, res) => {
-    const categories = await productsDb.distinct('category');
+    const categories = await Product.distinct('category');
     res.json(categories);
 });
 
@@ -108,10 +112,14 @@ const getCategories = asyncHandler(async (req, res) => {
 // @desc    Delete a product
 // @route   DELETE /api/products/:id
 // @access  Private/Admin
+// @desc    Delete a product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
 const deleteProduct = asyncHandler(async (req, res) => {
-    const deleted = await productsDb.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
 
-    if (deleted) {
+    if (product) {
+        await Product.deleteOne({ _id: product._id });
         res.json({ message: 'Product removed' });
     } else {
         res.status(404);
@@ -139,7 +147,7 @@ const createProduct = asyncHandler(async (req, res) => {
         variations
     } = req.body;
 
-    const product = await productsDb.create({
+    const product = await Product.create({
         name,
         price,
         cost,
@@ -164,10 +172,25 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-    const updated = await productsDb.findByIdAndUpdate(req.params.id, req.body);
+    const product = await Product.findById(req.params.id);
 
-    if (updated) {
-        res.json(updated);
+    if (product) {
+        product.name = req.body.name || product.name;
+        product.price = req.body.price || product.price;
+        product.cost = req.body.cost || product.cost;
+        product.description = req.body.description || product.description;
+        product.image = req.body.image || product.image;
+        product.brand = req.body.brand || product.brand;
+        product.category = req.body.category || product.category;
+        product.countInStock = req.body.countInStock || product.countInStock;
+        product.isTrending = req.body.isTrending;
+        product.isBestSeller = req.body.isBestSeller;
+        product.isNewArrival = req.body.isNewArrival;
+        product.images = req.body.images || product.images;
+        product.variations = req.body.variations || product.variations;
+
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
     } else {
         res.status(404);
         throw new Error('Product not found');

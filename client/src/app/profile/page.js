@@ -14,7 +14,6 @@ export default function ProfilePage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState(null);
     const [success, setSuccess] = useState(false);
-
     useEffect(() => {
         if (user) {
             setName(user.name);

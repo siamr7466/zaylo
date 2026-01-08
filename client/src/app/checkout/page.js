@@ -36,6 +36,14 @@ export default function CheckoutPage() {
     const totalPrice = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
 
     const placeOrderHandler = async () => {
+        if (cartItems.length === 0) {
+            alert('Your cart is empty');
+            router.push('/cart');
+            return;
+        }
+
+        console.log('Placing order with items:', cartItems);
+
         try {
             const { data } = await api.post(
                 '/orders',

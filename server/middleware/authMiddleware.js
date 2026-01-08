@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/User');
+const { usersDb } = require('../config/jsonDb');
 
 const protect = asyncHandler(async (req, res, next) => {
     let token;
@@ -14,9 +14,17 @@ const protect = asyncHandler(async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            req.user = await User.findById(decoded.id).select('-password');
+            const user = await usersDb.findById(decoded.id);
 
-            next();
+            if (user) {
+                // Remove password from user object
+                const { password, ...userWithoutPassword } = user;
+                req.user = userWithoutPassword;
+                next();
+            } else {
+                res.status(401);
+                throw new Error('Not authorized, user not found');
+            }
         } catch (error) {
             console.error(error);
             res.status(401);

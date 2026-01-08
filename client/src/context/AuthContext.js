@@ -44,8 +44,7 @@ export const AuthProvider = ({ children }) => {
     const register = async (name, email, password) => {
         try {
             const { data } = await api.post('/users', { name, email, password });
-            setUser(data);
-            localStorage.setItem('userInfo', JSON.stringify(data));
+            // Don't log in automatically. Wait for email verification.
             return data;
         } catch (error) {
             throw error.response && error.response.data.message

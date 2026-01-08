@@ -12,6 +12,7 @@ export default function AdminProducts() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('All');
     const [editingProduct, setEditingProduct] = useState(null);
 
     // Form Stats
@@ -34,7 +35,7 @@ export default function AdminProducts() {
     const fetchProducts = async () => {
         try {
             const { data } = await api.get('/products');
-            setProducts(data);
+            setProducts(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error fetching products:', error);
         } finally {
@@ -101,10 +102,12 @@ export default function AdminProducts() {
         });
     };
 
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredProducts = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.category.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = categoryFilter === 'All' || p.category === categoryFilter;
+        return matchesSearch && matchesCategory;
+    });
 
     return (
         <div className={styles.container}>
@@ -129,7 +132,10 @@ export default function AdminProducts() {
                     />
                 </div>
                 <div className={styles.filters}>
-                    <select onChange={(e) => setSearchTerm(e.target.value === 'All' ? '' : e.target.value)}>
+                    <select
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                    >
                         <option value="All">All Categories</option>
                         {categories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>

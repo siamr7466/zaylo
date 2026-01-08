@@ -2,6 +2,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { LuTrendingUp, LuShoppingBag, LuPackage, LuUsers, LuDollarSign } from 'react-icons/lu';
+import Link from 'next/link';
 import styles from './Dashboard.module.css';
 import api from '../../../lib/api';
 import AuthContext from '../../../context/AuthContext';
@@ -31,7 +32,7 @@ export default function AdminDashboard() {
                 setStats(statsRes.data);
 
                 const ordersRes = await api.get('/orders', config);
-                setRecentOrders(ordersRes.data.slice(0, 5));
+                setRecentOrders(Array.isArray(ordersRes.data) ? ordersRes.data.slice(0, 5) : []);
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
@@ -88,7 +89,9 @@ export default function AdminDashboard() {
                 >
                     <div className={styles.sectionHeader}>
                         <h3>Recent Orders</h3>
-                        <button className={styles.viewAllBtn}>View All Orders</button>
+                        <Link href="/admin/orders">
+                            <button className={styles.viewAllBtn}>View All Orders</button>
+                        </Link>
                     </div>
                     <div className={styles.tableResponsive}>
                         <table className={styles.table}>
