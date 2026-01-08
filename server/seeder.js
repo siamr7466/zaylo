@@ -1,54 +1,55 @@
-const { usersDb, productsDb, ordersDb } = require('./config/jsonDb');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const colors = require('colors');
 const users = require('./data/users');
 const products = require('./data/products');
-const bcrypt = require('bcryptjs');
+const User = require('./models/User');
+const Product = require('./models/Product');
+const Order = require('./models/Order');
+const Newsletter = require('./models/Newsletter');
+const connectDB = require('./config/db');
+
+dotenv.config();
+
+connectDB();
 
 const importData = async () => {
     try {
-        // Clear existing
-        usersDb.data = [];
-        productsDb.data = [];
-        ordersDb.data = [];
+        await Order.deleteMany();
+        await Product.deleteMany();
+        await User.deleteMany();
+        await Newsletter.deleteMany();
 
-        // Create users
-        const createdUsers = [];
-        for (const user of users) {
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(user.password, salt);
-            const createdUser = await usersDb.create({
-                ...user,
-                password: hashedPassword
-            });
-            createdUsers.push(createdUser);
-        }
+        const createdUsers = await User.insertMany(users);
 
         const adminUser = createdUsers[0]._id;
 
-        // Create products
-        for (const product of products) {
-            await productsDb.create({
-                ...product,
-                user: adminUser
-            });
-        }
+        const sampleProducts = products.map((product) => {
+            return { ...product, user: adminUser };
+        });
 
-        console.log('Data Imported successfully into JSON DB!');
+        await Product.insertMany(sampleProducts);
+
+        console.log('Data Imported!'.green.inverse);
+        process.exit();
     } catch (error) {
-        console.error(`Error importing data: ${error.message}`);
+        console.error(`${error}`.red.inverse);
+        process.exit(1);
     }
 };
 
 const destroyData = async () => {
     try {
-        usersDb.data = [];
-        productsDb.data = [];
-        ordersDb.data = [];
-        usersDb.save();
-        productsDb.save();
-        ordersDb.save();
-        console.log('Data Destroyed!');
+        await Order.deleteMany();
+        await Product.deleteMany();
+        await User.deleteMany();
+        await Newsletter.deleteMany();
+
+        console.log('Data Destroyed!'.red.inverse);
+        process.exit();
     } catch (error) {
-        console.error(`Error destroying data: ${error.message}`);
+        console.error(`${error}`.red.inverse);
+        process.exit(1);
     }
 };
 
