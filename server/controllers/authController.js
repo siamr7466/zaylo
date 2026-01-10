@@ -193,8 +193,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.find({});
-    res.json(users);
+    try {
+        const users = await User.find({});
+        res.json(users.length > 0 ? users : require('../data/users'));
+    } catch (error) {
+        res.json(require('../data/users'));
+    }
 });
 
 module.exports = {
