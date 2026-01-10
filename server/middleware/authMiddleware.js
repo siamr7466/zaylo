@@ -14,6 +14,16 @@ const protect = asyncHandler(async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+            if (decoded.id === 'mock_admin_id') {
+                req.user = {
+                    _id: 'mock_admin_id',
+                    name: 'Mock Admin',
+                    email: process.env.ADMIN_EMAIL || 'admin@example.com',
+                    isAdmin: true
+                };
+                return next();
+            }
+
             const user = await usersDb.findById(decoded.id);
 
             if (user) {
