@@ -5,12 +5,33 @@ const Settings = require('../models/Settings');
 // @route   GET /api/settings
 // @access  Public
 const getSettings = asyncHandler(async (req, res) => {
-    let settings = await Settings.findOne({});
+    try {
+        let settings = await Settings.findOne({});
 
-    if (!settings) {
-        // Default settings if none exist
-        settings = await Settings.create({
-            siteName: 'Zaylo',
+        if (!settings) {
+            // Default settings if none exist
+            settings = {
+                siteName: 'Zaylo',
+                siteDescription: 'Elevating your lifestyle with premium modern fashion.',
+                contact: {
+                    address: '123 Fashion Avenue, New York, NY 10012',
+                    email: 'support@zaylo.com',
+                    phone: '+1 (555) 123-4567',
+                    hours: 'Monday - Friday: 9am - 8pm'
+                },
+                socials: {
+                    facebook: 'https://facebook.com',
+                    twitter: 'https://twitter.com',
+                    instagram: 'https://instagram.com',
+                    linkedin: 'https://linkedin.com'
+                }
+            };
+        }
+        res.json(settings);
+    } catch (error) {
+        // Mock data if DB is disconnected
+        res.json({
+            siteName: 'Zaylo (Offline Mode)',
             siteDescription: 'Elevating your lifestyle with premium modern fashion.',
             contact: {
                 address: '123 Fashion Avenue, New York, NY 10012',
@@ -26,8 +47,6 @@ const getSettings = asyncHandler(async (req, res) => {
             }
         });
     }
-
-    res.json(settings);
 });
 
 // @desc    Update site settings

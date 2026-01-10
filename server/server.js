@@ -50,12 +50,12 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`✅ Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+app.listen(PORT, '127.0.0.1', () => {
+    console.log(`✅ Server running in ${process.env.NODE_ENV || 'development'} mode on http://127.0.0.1:${PORT}`);
     console.log(`📦 API Endpoints:`);
-    console.log(`   - GET /api/products`);
-    console.log(`   - GET /api/products/trending`);
-    console.log(`   - GET /api/products/bestsellers`);
-    console.log(`   - GET /api/products/newarrivals`);
-    console.log(`   - GET /api/products/:id`);
+    console.log(`   - GET http://127.0.0.1:${PORT}/api/products`);
+    console.log(`   - GET http://127.0.0.1:${PORT}/api/products/trending`);
+    console.log(`   - GET http://127.0.0.1:${PORT}/api/products/bestsellers`);
+    console.log(`   - GET http://127.0.0.1:${PORT}/api/products/newarrivals`);
+    console.log(`   - GET http://127.0.0.1:${PORT}/api/products/:id`);
 });
