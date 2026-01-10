@@ -7,6 +7,7 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PageHero from '../../components/ui/PageHero';
 import styles from './Contact.module.css';
+import api from '../../lib/api';
 
 export default function ContactPage() {
     const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
@@ -17,8 +18,7 @@ export default function ContactPage() {
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`);
-                const data = await res.json();
+                const { data } = await api.get('/settings');
                 if (data) setSettings(data);
             } catch (err) {
                 console.error("Failed to fetch settings:", err);
@@ -33,24 +33,13 @@ export default function ContactPage() {
         setStatus('loading');
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formState)
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                setStatus('success');
-                setFeedback('Message sent successfully! We will get back to you soon.');
-                setFormState({ name: '', email: '', subject: '', message: '' });
-            } else {
-                throw new Error(data.message || 'Failed to send message.');
-            }
+            const { data } = await api.post('/contact', formState);
+            setStatus('success');
+            setFeedback('Message sent successfully! We will get back to you soon.');
+            setFormState({ name: '', email: '', subject: '', message: '' });
         } catch (error) {
             setStatus('error');
-            setFeedback(error.message || 'Something went wrong. Please try again.');
+            setFeedback(error.response?.data?.message || 'Something went wrong. Please try again.');
         }
     };
 

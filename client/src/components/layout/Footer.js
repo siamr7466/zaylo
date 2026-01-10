@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import styles from './Footer.module.css';
+import api from '../../lib/api';
 
 const Footer = () => {
     const [settings, setSettings] = useState(null);
@@ -14,8 +15,7 @@ const Footer = () => {
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`);
-                const data = await res.json();
+                const { data } = await api.get('/settings');
                 if (data) setSettings(data);
             } catch (err) {
                 console.error("Failed to fetch settings:", err);
@@ -29,23 +29,13 @@ const Footer = () => {
         e.preventDefault();
         setSubStatus('loading');
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/newsletter`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            const data = await res.json();
-            if (res.ok) {
-                setSubStatus('success');
-                setSubMessage('Subscribed! Check your inbox.');
-                setEmail('');
-            } else {
-                setSubStatus('error');
-                setSubMessage(data.message || 'Subscription failed.');
-            }
+            const { data } = await api.post('/newsletter', { email });
+            setSubStatus('success');
+            setSubMessage('Subscribed! Check your inbox.');
+            setEmail('');
         } catch (error) {
             setSubStatus('error');
-            setSubMessage('Something went wrong.');
+            setSubMessage(error.response?.data?.message || 'Something went wrong.');
         }
     };
 

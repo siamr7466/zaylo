@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import AuthContext from '../../../context/AuthContext';
 import styles from './Settings.module.css';
+import api from '../../../lib/api';
 
 export default function SettingsPage() {
     const { token } = useContext(AuthContext);
@@ -33,8 +34,7 @@ export default function SettingsPage() {
 
         const fetchSettings = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`);
-                const data = await res.json();
+                const { data } = await api.get('/settings');
                 if (data) setSettings(data);
             } catch (err) {
                 console.error("Failed to fetch settings:", err);
@@ -69,20 +69,16 @@ export default function SettingsPage() {
         setMessage(null);
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`, {
-                method: 'PUT',
+            const config = {
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(settings)
-            });
-
-            if (!res.ok) throw new Error('Failed to update settings');
+                }
+            };
+            await api.put('/settings', settings, config);
 
             setMessage({ type: 'success', text: 'Settings updated successfully!' });
         } catch (err) {
-            setMessage({ type: 'error', text: err.message });
+            setMessage({ type: 'error', text: err.response?.data?.message || err.message });
         }
     };
 
